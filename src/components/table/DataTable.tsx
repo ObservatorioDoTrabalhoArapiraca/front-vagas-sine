@@ -1,0 +1,148 @@
+
+
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  PaginationState,
+  useReactTable,
+} from "@tanstack/react-table"
+
+
+import PaginationTable from "@/components/table/PaginationTable"
+import TableFilters, { TableFiltersProps } from "@/components/table/TableFilters"
+import { Input } from "@/components/ui/input"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Dispatch, SetStateAction, useState } from "react"
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
+  filters: TableFiltersProps
+  searchColumn?: string
+  searchPlaceholder?: string
+  paginationState?: PaginationState
+  setPaginationState?: Dispatch<SetStateAction<PaginationState>>
+  totalPages?: number,
+  totalCount?: number
+}
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  filters,
+  searchColumn,
+  searchPlaceholder = "Buscar...",
+  paginationState,
+  setPaginationState,
+  totalPages,
+  totalCount,
+}: DataTableProps<TData, TValue>) {
+
+  
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    [])
+
+  const isManualPagination = !!setPaginationState;
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    manualPagination: isManualPagination,
+    rowCount: isManualPagination ? totalCount : undefined,
+    pageCount: isManualPagination ? totalPages : undefined,
+    autoResetPageIndex: false,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+      ...(isManualPagination && { pagination: paginationState }),
+      },
+    onPaginationChange: setPaginationState,
+    getPaginationRowModel: getPaginationRowModel(),
+    })
+    
+
+  return (
+    <div className="overflow-hidden rounded-md border">
+      {filters && 
+      <TableFilters
+      ano={filters.ano}
+      mes={filters.mes}
+      isAnual={filters.isAnual}
+      onAnoChange={filters.onAnoChange}
+      onMesChange={filters.onMesChange}
+      onAgregacaoChange={filters.onAgregacaoChange}
+      />
+    }
+      {searchColumn && (
+        <div className="flex items-center p-4">
+        <Input
+          placeholder={searchPlaceholder}
+          value={(table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""}
+          onChange={(event: any) =>
+            table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+          />
+      </div>
+        )}
+      <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                </TableHead>
+              )
+              )}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                Sem Resultados.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+        </Table>
+      </div>
+      { (isManualPagination || data.length > 0) && <PaginationTable table={table} />}
+        
+    </div>
+  
+  )
+}
