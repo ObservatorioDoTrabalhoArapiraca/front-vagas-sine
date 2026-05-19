@@ -1,15 +1,20 @@
-import type {  Vagas } from "../../types";
+import api from "@/core/services/api";
+import type {  QueryParams, Vaga } from "@/types";
 
-export const getvagas = async ({ano, mes, agregacao, page, page_size, pagination}: QueryParams): Promise<Vagas> => {
+
+
+
+
+export const getVagas = async ({ descricao, escolaridade, experiencia, genero, observacao, data_coleta}: QueryParams): Promise<Vaga[]> => {
   try {
-    const response = await api.get<Vagas>(`api/vagas`, {
+    const response = await api.get<Vaga[]>(`api/vagas`, {
       params: {
-        ...(ano !== undefined && { ano }),
-        ...(mes !== undefined && { mes }),
-        agregacao,
-        page,
-        page_size,
-        pagination
+        ...(descricao && { descricao }),
+        ...(escolaridade && { escolaridade }),
+        ...(experiencia && { experiencia }),
+        ...(genero && { genero }),
+        ...(observacao && { observacao }),
+        ...(data_coleta && { data_coleta })
       },
     });
 

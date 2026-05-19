@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 
 import { Toaster } from "sonner"
-import { routePaths } from "./lib/routes"
+import { routePaths } from "@/lib/routes"
 
 
 function App() {

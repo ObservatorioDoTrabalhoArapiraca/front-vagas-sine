@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -8,50 +9,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAnosDisponiveisFromData } from "@/Utils/periodosDisponiveis";
+
 
 export interface TableFiltersProps {
-  ano: number | null;
-  mes: number | null;
-  isAnual: boolean;
-  onAnoChange: (ano: number| null) => void;
-  onMesChange: (mes: number| null) => void;
-  onAgregacaoChange: (isAnual: boolean) => void;
+  descricao: string | null;
+  onDescricaoChange: (descricao: string | null) => void;
+  escolaridade: string | null;
+  onEscolaridadeChange: (escolaridade: string | null) => void;
+  genero: string | null;
+  onGeneroChange: (genero: string | null) => void;
+  observacao: string | null;
+  onObservacaoChange: (observacao: string | null) => void;
 }
 
 export default function TableFilters({
-  ano,
-  mes,
-  isAnual,
-  onAnoChange,
-  onMesChange,
-  onAgregacaoChange,
+  descricao,
+  onDescricaoChange,
+  onEscolaridadeChange,
+  genero,
+  onGeneroChange,
+  observacao,
+  onObservacaoChange,
 }: TableFiltersProps) {
   // Gerar anos (últimos 6 anos)
-  const anos = getAnosDisponiveisFromData()
+
   
   // Meses do ano
-  const meses = [
-    { value: 1, label: "Janeiro" },
-    { value: 2, label: "Fevereiro" },
-    { value: 3, label: "Março" },
-    { value: 4, label: "Abril" },
-    { value: 5, label: "Maio" },
-    { value: 6, label: "Junho" },
-    { value: 7, label: "Julho" },
-    { value: 8, label: "Agosto" },
-    { value: 9, label: "Setembro" },
-    { value: 10, label: "Outubro" },
-    { value: 11, label: "Novembro" },
-    { value: 12, label: "Dezembro" },
+  const escolaridade = [
+    { value: "Não Exigida", label: "Não Exigida" },
+    { value: "Ensino Fundamental Completo", label: "Ensino Fundamental Completo" },
+    { value: "Ensino Médio Completo", label: "Ensino Médio Completo" },
+    { value: "Ensino Superior", label: "Ensino Superior" },
+    { value: "Mestrado", label: "Mestrado" },
+    { value: "Doutorado", label: "Doutorado" },
+  ];
+  const generos = [
+    { value: "A", label: "Ambos os gêneros" },
+    { value: "F", label: "Feminino" },
+    { value: "M", label: "Masculino" },
   ];
 
-  const handleAnoChange = (value: string) => {
+  const handleDescricaoChange = (value: string) => {
     if (value === "todos") {
-      onAnoChange(null);
-      onMesChange(null); // Limpa o mês também quando seleciona "Todos"
+      onDescricaoChange(null);
     } else {
-      onAnoChange(Number(value));
+      onDescricaoChange(value);
     }
   };
 
@@ -62,69 +64,69 @@ export default function TableFilters({
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-4 items-end">
-          {/* Select Ano */}
+         
           <div className="flex flex-col gap-2">
-            <Label htmlFor="ano">Ano</Label>
-            <Select 
-              value={ano?.toString() ?? "todos"} 
-              onValueChange={handleAnoChange}
-            >
-              <SelectTrigger className="w-[180px]" id="ano">
-                <SelectValue placeholder="Selecione o ano" />
-              </SelectTrigger>
-              <SelectContent>
-              <SelectItem value="todos">Todos os anos</SelectItem>
-                {anos.map((a) => (
-                  <SelectItem key={a} value={a.toString()}>
-                    {a}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label htmlFor="descricao">Descrição</Label>
+            <Input 
+              value={descricao ?? ""} 
+              onChange={(e) => handleDescricaoChange(e.target.value)} 
+              placeholder="Busque por título..."
+            />
           </div>
 
-          {/* Select Mês */}
+        
           <div className="flex flex-col gap-2">
-            <Label htmlFor="mes">Mês</Label>
+            <Label htmlFor="escolaridade">Escolaridade</Label>
             <Select 
-              value={mes?.toString() ?? ""} 
-              onValueChange={(value) => onMesChange(Number(value))}
-              disabled={ano === null}
+              value={escolaridade?.toString() ?? ""} 
+              onValueChange={(value) => onEscolaridadeChange(value)}
             >
               <SelectTrigger className="w-[180px]" id="mes">
-                <SelectValue placeholder="Selecione o mês" />
+                <SelectValue placeholder="Selecione a escolaridade" />
               </SelectTrigger>
               <SelectContent>
-                {meses.map((m) => (
-                  <SelectItem key={m.value} value={m.value.toString()}>
-                    {m.label}
+                {escolaridade.map((e) => (
+                  <SelectItem key={e.value} value={e.value.toString()}>
+                    {e.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="genero">Gênero</Label>
+            <Select 
+              value={genero?.toString() ?? ""} 
+              onValueChange={(value) => onGeneroChange(value)}
+            >
+              <SelectTrigger className="w-[180px]" id="mes">
+                <SelectValue placeholder="Selecione o gênero" />
+              </SelectTrigger>
+              <SelectContent>
+                {generos.map((g) => (
+                  <SelectItem key={g.value} value={g.value.toString()}>
+                    {g.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          {/* Checkbox Agregação */}
-          <div className="flex items-center space-x-2">
-            <Checkbox 
-              id="agregacao" 
-              checked={isAnual}
-              onCheckedChange={(checked) => onAgregacaoChange(checked as boolean)}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="observacao">Observação</Label>
+            <Input 
+              value={observacao ?? ""} 
+              onChange={(e) => onObservacaoChange(e.target.value)} 
+              placeholder="Busque por observação..."
             />
-            <Label 
-              htmlFor="agregacao" 
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Agregação Anual
-            </Label>
           </div>
         </div>
         
         <p className="text-sm text-muted-foreground mt-3">
-        {ano === null ? (
-            <>Exibindo: <strong>Todos os anos</strong></>
+        {descricao === null ? (
+            <>Exibindo: <strong>Todos as vagas</strong></>
           ) : (
-            <>Agregação atual: <strong>{isAnual ? "Anual" : "Mensal"}</strong></>
+            <>Exibindo: <strong>{descricao}</strong></>
           )}
         </p>
       </CardContent>

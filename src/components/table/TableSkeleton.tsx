@@ -1,5 +1,6 @@
 
-import { Skeleton } from "@/components/skeleton"
+
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,

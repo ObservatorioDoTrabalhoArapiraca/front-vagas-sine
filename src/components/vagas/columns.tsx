@@ -1,97 +1,76 @@
+import type { ColumnDef } from "@tanstack/react-table"
+import type { Vaga } from "@/types/index"
 
-import { capitalizeFirstLetter } from "@/Utils/capitalizeFirstLettrer"
-import { Vaga } from "@/types"
-import { ColumnDef } from "@tanstack/react-table"
 
 export const columns: ColumnDef<Vaga>[] = [
   {
-    accessorKey: "ano",
-    header: ({ column }) => {
-      return (
-        <div className="font-bold ">
-          {capitalizeFirstLetter(column.id)
-            .replace(/_/g, " ") 
-            }
-        </div>
-      )
-    },
+    accessorKey: "descricao",
+    header: "Descricao",
     cell: ({ row }) => {
       return (
         <div>
-          {row.original.ano}
-        
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "mes",
-    header: ({ column }) => {
-      return (
-        <div className="font-bold ">
-          {capitalizeFirstLetter(column.id).replace(/_/g, " ")}
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      return (
-        <div>
-          {row.original.mes}
+          {row.original.descricao}
            
         </div>
       )
     },
   },
   {
-    accessorKey: "sexo_descricao",
-    header: ({ column }) => {
-      return (
-        <div className="font-bold ">
-          {capitalizeFirstLetter(column.id).replace(/_/g, " ")}
-        </div>
-      )
-    },
+    accessorKey: "escolaridade",
+    header: "Escolaridade",
     cell: ({ row }) => {
       return (
         <div>
-          {row.original.sexo_descricao}
+          {row.original.escolaridade}
         </div>
       )
     },
   },
   {
-    accessorKey: "percentual",
-    header: ({ column }) => {
-      return (
-        <div className="font-bold ">
-          {capitalizeFirstLetter(column.id).replace(/_/g, " ")}
-        </div>
-      )
-    },
+    accessorKey: "experiencia",
+    header: "Experiência",
     cell: ({ row }) => {
       return (
         <div>
-          {row.original.percentual}%
+          {row.original.experiencia}
            
         </div>
       )
     },
   },
-  // {
-  //   accessorKey: "total_movimentacoes",
-  //   header: ({ column }) => {
-  //     return (
-  //       <div className="font-bold ">
-  //         {capitalizeFirstLetter(column.id).replace(/_/g, " ")}
-  //       </div>
-  //     )
-  //   },
-  //   cell: ({ row }) => {
-  //     return (
-  //       <div>
-  //         {row.original.total_movimentacoes}
-  //       </div>
-  //     )
-  //   },
-  // },
+  {
+    accessorKey: "observacao",
+    header: "Observação",
+
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.observacao}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "genero",
+    header: "Gênero",
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.genero}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "quantidade",
+    header: "Quantidade",
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.quantidade}
+        </div>
+      )
+    },
+  },
+ 
 ]

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import Home from "../pages/Home"
+import Home from "@/pages/Home"
 
 export type RoutePath = {
   path: string

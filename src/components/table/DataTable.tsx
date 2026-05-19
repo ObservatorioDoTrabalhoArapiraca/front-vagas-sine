@@ -1,20 +1,13 @@
-
-
 import {
-  ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
-  PaginationState,
   useReactTable,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type PaginationState,
 } from "@tanstack/react-table"
 
-
-import PaginationTable from "@/components/table/PaginationTable"
-import TableFilters, { TableFiltersProps } from "@/components/table/TableFilters"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -22,8 +15,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Dispatch, SetStateAction, useState } from "react"
+} from "../ui/table"
+import { useState, type Dispatch, type SetStateAction } from "react"
+import type { TableFiltersProps } from "./TableFilters"
+import TableFilters from "./TableFilters"
+import { Input } from "../ui/input"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -43,33 +39,19 @@ export function DataTable<TData, TValue>({
   filters,
   searchColumn,
   searchPlaceholder = "Buscar...",
-  paginationState,
-  setPaginationState,
-  totalPages,
-  totalCount,
 }: DataTableProps<TData, TValue>) {
 
   
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     [])
 
-  const isManualPagination = !!setPaginationState;
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: isManualPagination,
-    rowCount: isManualPagination ? totalCount : undefined,
-    pageCount: isManualPagination ? totalPages : undefined,
-    autoResetPageIndex: false,
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-      ...(isManualPagination && { pagination: paginationState }),
-      },
-    onPaginationChange: setPaginationState,
-    getPaginationRowModel: getPaginationRowModel(),
+  
     })
     
 
@@ -77,12 +59,14 @@ export function DataTable<TData, TValue>({
     <div className="overflow-hidden rounded-md border">
       {filters && 
       <TableFilters
-      ano={filters.ano}
-      mes={filters.mes}
-      isAnual={filters.isAnual}
-      onAnoChange={filters.onAnoChange}
-      onMesChange={filters.onMesChange}
-      onAgregacaoChange={filters.onAgregacaoChange}
+      descricao={filters.descricao}
+      escolaridade={filters.escolaridade}
+      genero={filters.genero}
+      observacao={filters.observacao}
+      onDescricaoChange={filters.onDescricaoChange}
+      onEscolaridadeChange={filters.onEscolaridadeChange}
+      onGeneroChange={filters.onGeneroChange}
+      onObservacaoChange={filters.onObservacaoChange}
       />
     }
       {searchColumn && (
@@ -140,9 +124,6 @@ export function DataTable<TData, TValue>({
         </TableBody>
         </Table>
       </div>
-      { (isManualPagination || data.length > 0) && <PaginationTable table={table} />}
-        
     </div>
-  
   )
 }

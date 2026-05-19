@@ -1,3 +1,12 @@
+export type QueryParams = {
+  descricao?: string;
+  escolaridade?: string;
+  experiencia?: string;
+  genero?: string;
+  observacao?: string;
+  data_coleta?: string;
+};
+
 export interface Vaga {
   id: number
   codigo_sine: number,
@@ -8,13 +17,6 @@ export interface Vaga {
   genero: string,
   quantidade: number,
   expired: boolean,
-  data_coleta: string,
-  data_exp: string | null
-}
-export interface Vagas {
-  dados: Vaga[],
-  total: number,
-  total_pages: number,
-  page: number,
-  page_size: number
+  data_coleta?: string,
+  data_exp?: string | null
 }
