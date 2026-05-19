@@ -5,7 +5,7 @@ import { Spinner } from "../components/ui/spinner"
 import { getVagas } from "../core/services/index"
 
 import { DataTable } from "@/components/table/DataTable"
-import { columns } from "@/components/vagas/columns"
+import { columns } from "@/components/table/columns"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
