@@ -22,7 +22,6 @@ export interface TableFiltersProps {
 }
 
 export default function TableFilters({
-  onDescricaoChange,
   onEscolaridadeChange,
   genero,
   onGeneroChange,
