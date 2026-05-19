@@ -122,7 +122,7 @@ export default function TableFilters({
           </div>
         </div>
         
-        <p className="text-sm text-muted-foreground mt-3">
+        <p className="text-sm text-muted-foreground mt-3 pb-15">
         {descricao === null ? (
             <>Exibindo: <strong>Todos as vagas</strong></>
           ) : (

@@ -11,7 +11,6 @@ import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 import type { Vaga } from "../types"
 
-
 export default function TablePage() {
   const [dados, setDados] = useState<Vaga[] | null>(null)
 
@@ -114,11 +113,11 @@ export default function TablePage() {
   return (
     <div className="w-full mx-auto p-4">
      {searching && (
-        <div className="absolute top-50 right-160 z-10 bg-white rounded-md p-4 shadow-md flex items-center">
+        <div className="absolute top-6 right-6 z-10 bg-white rounded-md p-4 shadow-md flex items-center">
           <Spinner text="Pesquisando..." />
         </div>
       )}
-        <DataTable<Vaga, Vaga>
+      <DataTable<Vaga, Vaga>
           data={dados || []}
           columns={columns}
           filters={{
@@ -130,12 +129,10 @@ export default function TablePage() {
             onEscolaridadeChange: handleEscolaridadeChange,
             onGeneroChange: handleGeneroChange,
             onObservacaoChange: handleObservacaoChange,
-   
           }}
-          searchColumn="descricao"
-          searchPlaceholder="Filtrar por vaga..."
+          // searchColumn="descricao"
+          // searchPlaceholder="Filtrar por vaga..."
         />
- 
     </div>
   )
 }
