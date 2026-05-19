@@ -48,10 +48,12 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
+    state: {
+      columnFilters,
+      },
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-  
     })
     
 
@@ -59,7 +61,6 @@ export function DataTable<TData, TValue>({
     <div className="overflow-hidden rounded-md border">
       {filters && 
       <TableFilters
-      descricao={filters.descricao}
       escolaridade={filters.escolaridade}
       genero={filters.genero}
       observacao={filters.observacao}

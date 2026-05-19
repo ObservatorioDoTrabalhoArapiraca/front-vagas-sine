@@ -12,7 +12,6 @@ import {
 
 
 export interface TableFiltersProps {
-  descricao: string | null;
   onDescricaoChange: (descricao: string | null) => void;
   escolaridade: string | null;
   onEscolaridadeChange: (escolaridade: string | null) => void;
@@ -23,7 +22,6 @@ export interface TableFiltersProps {
 }
 
 export default function TableFilters({
-  descricao,
   onDescricaoChange,
   onEscolaridadeChange,
   genero,
@@ -49,14 +47,6 @@ export default function TableFilters({
     { value: "M", label: "Masculino" },
   ];
 
-  const handleDescricaoChange = (value: string) => {
-    if (value === "todos") {
-      onDescricaoChange(null);
-    } else {
-      onDescricaoChange(value);
-    }
-  };
-
   return (
     <Card className="mb-6 shadow-md bg-off-white/40 ">
       <CardHeader>
@@ -64,15 +54,6 @@ export default function TableFilters({
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-4 items-end">
-         
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="descricao">Descrição</Label>
-            <Input 
-              value={descricao ?? ""} 
-              onChange={(e) => handleDescricaoChange(e.target.value)} 
-              placeholder="Busque por título..."
-            />
-          </div>
 
         
           <div className="flex flex-col gap-2">
@@ -123,10 +104,10 @@ export default function TableFilters({
         </div>
         
         <p className="text-sm text-muted-foreground mt-3 pb-15">
-        {descricao === null ? (
+        {observacao === null ? (
             <>Exibindo: <strong>Todos as vagas</strong></>
           ) : (
-            <>Exibindo: <strong>{descricao}</strong></>
+            <>Exibindo: <strong>{observacao}</strong></>
           )}
         </p>
       </CardContent>

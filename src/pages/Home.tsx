@@ -121,7 +121,6 @@ export default function TablePage() {
           data={dados || []}
           columns={columns}
           filters={{
-            descricao,
             escolaridade,
             genero,
             observacao,
@@ -130,8 +129,8 @@ export default function TablePage() {
             onGeneroChange: handleGeneroChange,
             onObservacaoChange: handleObservacaoChange,
           }}
-          // searchColumn="descricao"
-          // searchPlaceholder="Filtrar por vaga..."
+          searchColumn="descricao"
+          searchPlaceholder="Filtrar por vaga..."
         />
     </div>
   )
