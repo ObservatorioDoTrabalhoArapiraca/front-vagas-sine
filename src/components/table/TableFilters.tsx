@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
@@ -19,20 +20,25 @@ export interface TableFiltersProps {
   onGeneroChange: (genero: string | null) => void;
   observacao: string | null;
   onObservacaoChange: (observacao: string | null) => void;
+  count?: number;
+  onFiltersCleaned?: () => void;
 }
 
 export default function TableFilters({
+  escolaridade,
   onEscolaridadeChange,
   genero,
   onGeneroChange,
   observacao,
   onObservacaoChange,
+  count,
+  onFiltersCleaned
 }: TableFiltersProps) {
   // Gerar anos (últimos 6 anos)
 
   
   // Meses do ano
-  const escolaridade = [
+  const escolaridades = [
     { value: "Não Exigida", label: "Não Exigida" },
     { value: "Ensino Fundamental Completo", label: "Ensino Fundamental Completo" },
     { value: "Ensino Médio Completo", label: "Ensino Médio Completo" },
@@ -65,7 +71,7 @@ export default function TableFilters({
                 <SelectValue placeholder="Selecione a escolaridade" />
               </SelectTrigger>
               <SelectContent>
-                {escolaridade.map((e) => (
+                {escolaridades.map((e) => (
                   <SelectItem key={e.value} value={e.value.toString()}>
                     {e.label}
                   </SelectItem>
@@ -91,7 +97,6 @@ export default function TableFilters({
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex flex-col gap-2">
             <Label htmlFor="observacao">Observação</Label>
             <Input 
@@ -100,14 +105,20 @@ export default function TableFilters({
               placeholder="Busque por observação..."
             />
           </div>
+          <div>
+            <Button onClick={onFiltersCleaned}>Limpar Filtros</Button>
+          </div>
         </div>
-        
-        <p className="text-sm text-muted-foreground mt-3 pb-15">
+        {/* <p className="text-sm text-muted-foreground mt-3 pb-15">
         {observacao === null ? (
             <>Exibindo: <strong>Todos as vagas</strong></>
           ) : (
             <>Exibindo: <strong>{observacao}</strong></>
           )}
+        </p> */}
+        
+        <p className="text-sm text-muted-foreground pt-4">
+          {`Total de vagas: ${count ?? 0}`}
         </p>
       </CardContent>
     </Card>

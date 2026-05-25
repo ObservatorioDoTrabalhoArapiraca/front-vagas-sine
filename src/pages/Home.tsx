@@ -25,6 +25,7 @@ export default function TablePage() {
   const [escolaridade, setEscolaridade] = useState<string>(parseParam("escolaridade"))
   const [genero, setGenero] = useState<string>(parseParam("genero"))
   const [observacao, setObservacao] = useState<string>(parseParam("observacao"))
+  const [count, setCount] = useState<number>(0)
   
   const [debouncedDescricao, setDebouncedDescricao] = useState<string>(descricao)
 
@@ -76,6 +77,18 @@ export default function TablePage() {
     setObservacao(v)
     atualizarParams({ observacao: v })
   }
+  const handleClearFilters = () => {
+    setDescricao("")
+    setEscolaridade("")
+    setGenero("")
+    setObservacao("")
+    atualizarParams({
+      descricao: "",
+      escolaridade: "",
+      genero: "",
+      observacao: ""
+    })
+  }
   
   useEffect(() => {
     setSearching(true)
@@ -90,6 +103,7 @@ export default function TablePage() {
         })
         if (response) {
           setDados(response);
+          setCount(response.length);
         }
       } catch (error) {
         toast.error("Erro ao buscar dados")
@@ -128,9 +142,11 @@ export default function TablePage() {
             onEscolaridadeChange: handleEscolaridadeChange,
             onGeneroChange: handleGeneroChange,
             onObservacaoChange: handleObservacaoChange,
+            count: count || 0,
+            onFiltersCleaned: handleClearFilters
           }}
           searchColumn="descricao"
-          searchPlaceholder="Filtrar por vaga..."
+        searchPlaceholder="Filtrar por descrição da vaga..."
         />
     </div>
   )

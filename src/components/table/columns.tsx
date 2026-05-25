@@ -5,7 +5,7 @@ import type { Vaga } from "@/types/index"
 export const columns: ColumnDef<Vaga>[] = [
   {
     accessorKey: "descricao",
-    header: "Descricao",
+    header: "Descrição",
     cell: ({ row }) => {
       return (
         <div>

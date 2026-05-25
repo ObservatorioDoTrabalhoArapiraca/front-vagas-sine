@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
     
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md">
       {filters && 
       <TableFilters
       escolaridade={filters.escolaridade}
@@ -68,6 +68,8 @@ export function DataTable<TData, TValue>({
       onEscolaridadeChange={filters.onEscolaridadeChange}
       onGeneroChange={filters.onGeneroChange}
       onObservacaoChange={filters.onObservacaoChange}
+      count={filters.count}
+      onFiltersCleaned={filters.onFiltersCleaned}
       />
     }
       {searchColumn && (
@@ -105,11 +107,12 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
+                className="even:bg-gray-500/20"
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="border">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
