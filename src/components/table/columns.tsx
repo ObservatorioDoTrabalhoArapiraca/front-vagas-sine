@@ -4,6 +4,18 @@ import type { Vaga } from "@/types/index"
 
 export const columns: ColumnDef<Vaga>[] = [
   {
+    accessorKey: "codigo",
+    header: "Código",
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.codigo_sine.toString().padStart(6, "0").slice(-3)}
+           
+        </div>
+      )
+    },
+  },
+  {
     accessorKey: "descricao",
     header: "Descrição",
     cell: ({ row }) => {

@@ -17,8 +17,15 @@ export const getVagas = async ({ descricao, escolaridade, experiencia, genero, o
         ...(data_coleta && { data_coleta })
       },
     });
-
-    return response.data; 
+    function ordenarPorDescricao(response: Vaga[]): Vaga[] {
+      return response.sort((a, b) => {
+          // localeCompare trata corretamente acentos (ex: 'Á' perto de 'A')
+          return a.descricao.localeCompare(b.descricao, 'pt-BR', { sensitivity: 'base' });
+      });
+  }
+  
+  const vagasOrdenadas = ordenarPorDescricao(response.data);
+    return vagasOrdenadas; 
   } catch (error) {
     throw error;
   }
