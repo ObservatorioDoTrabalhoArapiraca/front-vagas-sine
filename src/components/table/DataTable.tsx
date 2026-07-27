@@ -8,6 +8,8 @@ import {
   type PaginationState,
 } from "@tanstack/react-table"
 
+import { useState, type Dispatch, type SetStateAction } from "react"
+import { Input } from "../ui/input"
 import {
   Table,
   TableBody,
@@ -16,10 +18,9 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table"
-import { useState, type Dispatch, type SetStateAction } from "react"
 import type { TableFiltersProps } from "./TableFilters"
 import TableFilters from "./TableFilters"
-import { Input } from "../ui/input"
+import UpdatedAt from "@/components/table/UpdatedAt"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -84,6 +85,7 @@ export function DataTable<TData, TValue>({
           />
       </div>
         )}
+      <UpdatedAt data={data}/>
       <div className="rounded-md border">
       <Table>
         <TableHeader>

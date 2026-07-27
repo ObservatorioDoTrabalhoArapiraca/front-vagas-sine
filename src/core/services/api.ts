@@ -2,15 +2,21 @@
 
 import axios from "axios"
 
-const API_URL =  import.meta.env.VITE_API_URL 
+// const API_URL =  import.meta.env.VITE_API_URL 
 
 
-if (!API_URL) {
-  console.error("❌ VITE_API_URL não está definida!")
-}
+// if (!API_URL) {
+//   console.error("❌ VITE_API_URL não está definida!")
+// }
+console.log("URL DA API:", import.meta.env.VITE_API_URL);
+
+fetch('https://view-api-vagas-sine.vercel.app/api/vagas/')
+  .then(res => res.json())
+  .then(data => console.log('Sua API respondeu:', data))
+  .catch(err => console.error('Erro na chamada:', err));
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: import.meta.env.VITE_API_URL ,
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",

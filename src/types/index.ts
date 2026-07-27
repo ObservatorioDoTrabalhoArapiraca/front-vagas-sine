@@ -9,7 +9,7 @@ export type QueryParams = {
 
 export interface Vaga {
   id: number
-  codigo_sine: number,
+  codigo_sine: string,
   descricao: string,
   escolaridade: string,
   experiencia: string,

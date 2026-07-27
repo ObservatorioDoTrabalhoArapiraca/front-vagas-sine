@@ -10,7 +10,6 @@ export const columns: ColumnDef<Vaga>[] = [
       return (
         <div>
           {row.original.codigo_sine.toString().padStart(6, "0").slice(-3)}
-           
         </div>
       )
     },
@@ -80,6 +79,26 @@ export const columns: ColumnDef<Vaga>[] = [
       return (
         <div>
           {row.original.quantidade}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "data_exp",
+    header: "Data de Atualização",
+    cell: ({ row }) => {
+      const dataFormatada = row.original.data_exp 
+  ? new Date(row.original.data_exp).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  : 'Não informada';
+      return (
+        <div>
+          {dataFormatada}
         </div>
       )
     },
