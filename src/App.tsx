@@ -1,17 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-
-import { Toaster } from "sonner"
 import { routePaths } from "@/lib/routes"
-
+import { Toaster } from "sonner"
 
 function App() {
   return (
-   
       <div className="App">
       <Toaster />
       <BrowserRouter>
-   
         <main>
           {/* TODO: retirar os main de todas as páginas */}
           <Routes>
@@ -21,8 +17,6 @@ function App() {
           </Routes>
         </main>
       </BrowserRouter>
-
-           
     </div>
     
   )

@@ -41,12 +41,23 @@ export const columns: ColumnDef<Vaga>[] = [
     accessorKey: "experiencia",
     header: "Experiência",
     cell: ({ row }) => {
+      const valorOriginal = row.original.experiencia;
+
+    if (!valorOriginal) return <div>Não informada</div>;
+
+    // Procura o texto do tempo e o texto dentro dos parênteses
+    const match = valorOriginal.match(/^(.*?)\s*\((.*?)\)$/);
+
+    if (match) {
+      const tempo = match[1].trim();
+      const comprovada = match[2].trim();
+      
       return (
         <div>
-          {row.original.experiencia}
-           
+          {tempo}; Comprovada: {comprovada}
         </div>
-      )
+      );
+    }
     },
   },
   {
@@ -56,7 +67,7 @@ export const columns: ColumnDef<Vaga>[] = [
     cell: ({ row }) => {
       return (
         <div>
-          {row.original.observacao}
+          {row.original.observacao ? row.original.observacao : "-"}
         </div>
       )
     },

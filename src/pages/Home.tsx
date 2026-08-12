@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 import type { Vaga } from "../types"
+import Header from "@/components/Header"
 
 export default function TablePage() {
   const [dados, setDados] = useState<Vaga[] | null>(null)
@@ -32,7 +33,7 @@ export default function TablePage() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedDescricao(descricao)
-    }, 500) // tempo em milissegundos
+    }, 500)
 
     return () => clearTimeout(handler)
   }, [descricao])
@@ -46,7 +47,6 @@ export default function TablePage() {
       ...novosValores,
     }
     
-    // Limpa chaves vazias da URL
     Object.keys(novosParams).forEach(key => {
       if (!novosParams[key as keyof typeof novosParams]) delete novosParams[key as keyof typeof novosParams]
     })
@@ -126,6 +126,7 @@ export default function TablePage() {
   if (error) return <div className="p-4 text-red-500">{error}</div>
   return (
     <div className="w-full mx-auto p-4">
+      <Header/>
      {searching && (
         <div className="absolute top-6 right-6 z-10 bg-white rounded-md p-4 shadow-md flex items-center">
           <Spinner text="Pesquisando..." />
@@ -147,7 +148,8 @@ export default function TablePage() {
           }}
           searchColumn="descricao"
         searchPlaceholder="Filtrar por descrição da vaga..."
-        />
+      />
+      <span className="text-red-600 text-md font-semibold hover:text-cyan-800 transition-colors">*As vagas são atualizadas diariamente conforme a data indicada. Caso a data esteja com uma data desatualizada ela pode estar vencida. Para mais informações, entre em contato com o SINE através da CIDA.</span>
     </div>
   )
 }
