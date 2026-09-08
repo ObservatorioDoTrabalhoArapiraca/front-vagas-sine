@@ -8,6 +8,7 @@ import {
   type PaginationState,
 } from "@tanstack/react-table"
 
+import UpdatedAt from "@/components/table/UpdatedAt"
 import { useState, type Dispatch, type SetStateAction } from "react"
 import { Input } from "../ui/input"
 import {
@@ -20,7 +21,6 @@ import {
 } from "../ui/table"
 import type { TableFiltersProps } from "./TableFilters"
 import TableFilters from "./TableFilters"
-import UpdatedAt from "@/components/table/UpdatedAt"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -85,7 +85,10 @@ export function DataTable<TData, TValue>({
           />
       </div>
         )}
-      <UpdatedAt data={data}/>
+      <UpdatedAt data={data} />
+      <span className="text-sm text-red-500 p-4 font-bold">
+      Horário de Atendimento 08:00 às 14:00 horas, de segunda-feira a sexta-feira.
+      </span>
       <div className="rounded-md border">
       <Table>
         <TableHeader>
